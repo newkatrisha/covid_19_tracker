@@ -1,12 +1,22 @@
 import React from 'react';
-import './App.css';
 import { Cards, Chart, CountryPicker } from './components'; //this works vecause we have index.js file in components folder 
+import styles from './App.module.css';
+import { fetchData } from './api';
 
 class App extends React.Component {
+  state = {
+    data: {}
+  }
+
+  async componentDidMount() {
+    const fetchedData = await fetchData();
+    this.setState({ data: fetchedData });
+  }
   render() {
+    const { data } = this.state;
     return (
-      <div>
-        <Cards />
+      <div className={styles.container}>
+        <Cards data={data} />
         <CountryPicker />
         <Chart />
       </div>
